@@ -1,0 +1,7 @@
+Library/
+Temp/
+.vsconfig
+*.csproj
+.utmp/
+Logs/
+UserSettings/
