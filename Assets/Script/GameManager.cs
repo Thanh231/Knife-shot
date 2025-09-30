@@ -6,24 +6,8 @@ public class GameManager : MonoBehaviour
     public static GameManager ins;
 
     private string highScore;
-    public int currentLevel = 0;
+    public int currentStage = 0;
 
-    // public List<float> speedPlayer;
-
-    // public List<float> speedObstacle;
-    // public List<float> pivotScore, speedIncreaseScore;
-
-    public float basePivotScore = 100f;
-    public float pivotMultiplier = 2f;
-
-    public float basePlayerSpeed = 60;
-    public float playerSpeedMultiplier = 1.1f;
-
-    public float baseObstacleSpeed = 55;
-    public float obstacleSpeedMultiplier = 1.05f;
-
-    public float baseincreasePointSpeed = 10;
-    public float increasePointSpeedMultiplier = 1.05f;
     private void Awake()
     {
         if (ins == null)
@@ -36,26 +20,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-
-    public float GetPivotScoreForNextLevel()
-    {
-        return basePivotScore * Mathf.Pow(pivotMultiplier, currentLevel);
-    }
-
-    public float GetPlayerSpeed()
-    {
-        return basePlayerSpeed * Mathf.Pow(playerSpeedMultiplier, currentLevel);
-    }
-
-    public float GetObstacleSpeed()
-    {
-        return baseObstacleSpeed * Mathf.Pow(obstacleSpeedMultiplier, currentLevel);
-    }
-
-    public float GetIncreasePointSpeed()
-    {
-        return baseincreasePointSpeed * Mathf.Pow(increasePointSpeedMultiplier, currentLevel);
-    }
     public int HighScore
     {
         get
@@ -76,7 +40,7 @@ public class GameManager : MonoBehaviour
 
     public void EndGame()
     {
-        currentLevel = 0;
+        currentStage = 0;
         EventManager.ResetGame?.Invoke();
     }
 

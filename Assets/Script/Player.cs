@@ -48,8 +48,8 @@ public class Player : MonoBehaviour
                 dir *= -1;
                 SoundManager.instance.Play(SoundManager.instance.moveSound);
             }
-            float speed = GameManager.ins.GetPlayerSpeed();
-            transform.RotateAround(Vector3.zero, Vector3.forward, speed * dir * Time.deltaTime);
+            // float speed = GameManager.ins.GetPlayerSpeed();
+            // transform.RotateAround(Vector3.zero, Vector3.forward, speed * dir * Time.deltaTime);
         }
 
     }

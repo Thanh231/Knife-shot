@@ -4,18 +4,13 @@ using UnityEngine;
 public class Obstacle : MonoBehaviour
 {
 
-    public GameObject explosion;
-
     private float timer = 0;
     private float dir = 1;
-    private bool isStartGame = false;
+    private bool isStartGame = true;
     void OnEnable()
     {
         EventManager.StartGame += StartGame;
         EventManager.ResetGame += ResetGame;
-
-        explosion.GetComponent<ParticleSystem>().Stop();
-
     }
 
     private void StartGame()
@@ -49,30 +44,24 @@ public class Obstacle : MonoBehaviour
             timer = 0f;
             dir = (UnityEngine.Random.Range(0, 2) == 0) ? 1f : -1f;
         }
-        transform.Rotate(0, 0, GameManager.ins.GetObstacleSpeed() * dir * Time.deltaTime);
+        transform.Rotate(0, 0, 50f * dir * Time.deltaTime);
         }
         
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        collision.gameObject.GetComponent<Player>().DisablePlayerObject();
+    // private void OnTriggerEnter2D(Collider2D collision)
+    // {
+        // collision.gameObject.GetComponent<Player>().DisablePlayerObject();
 
-        SoundManager.instance.Play(SoundManager.instance.loseSound);
+        // SoundManager.instance.Play(SoundManager.instance.loseSound);
 
-        if (explosion != null)
-        {
+        // if (explosion != null)
+        // {
 
-            explosion.transform.position = collision.gameObject.transform.position;
-            explosion.GetComponent<ParticleSystem>().Play();
-        }
+        //     explosion.transform.position = collision.gameObject.transform.position;
+        //     explosion.GetComponent<ParticleSystem>().Play();
+        // }
 
-        StartCoroutine(EndGame());
-    }
-    private IEnumerator EndGame()
-    {
-
-        yield return new WaitForSeconds(2f);
-        GameManager.ins.EndGame();
-    }
+    // }
+   
 }
