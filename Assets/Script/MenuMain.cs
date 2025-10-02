@@ -47,7 +47,6 @@ public class MenuMain : MonoBehaviour
     {
         tutorial.SetActive(true);
         menu.SetActive(false);
-
     }
 
     private void Start()

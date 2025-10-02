@@ -5,6 +5,8 @@ public class Knife : MonoBehaviour
 {
     // private BoxCollider2D knifeCollider;
     private bool isMoving = false;
+    private bool isCollide = false;
+    
     void Start()
     {
         // knifeCollider = GetComponent<BoxCollider2D>();
@@ -17,24 +19,34 @@ public class Knife : MonoBehaviour
         {
             transform.position += Vector3.up * 20f * Time.deltaTime;
         }
-    }
 
-    void OnTriggerEnter2D(Collider2D collision)
+        if (isCollide)
+        {
+            transform.position -= Vector3.up * 30f * Time.deltaTime;
+        }
+    }
+    void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.tag == "Obstacle")
+        if (collision.gameObject.tag == "Obstacle")
         {
             isMoving = false;
             this.transform.parent = collision.transform;
         }
-        else if (collision.tag == "Knife")
+        else if (collision.gameObject.tag == "Knife")
         {
+            isCollide = true;
             StartCoroutine(EndGame());
         }
+    }
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+
     }
 
     private IEnumerator EndGame()
     {
         yield return new WaitForSeconds(2f);
         GameManager.ins.EndGame();
+        isCollide = false;
     }
 }

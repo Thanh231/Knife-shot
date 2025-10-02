@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     public void PlayGame()
     {
-        SoundManager.instance.Play(SoundManager.instance.playSound);
+        // SoundManager.instance.Play(SoundManager.instance.playSound);
         EventManager.StartGame?.Invoke();
     }
 

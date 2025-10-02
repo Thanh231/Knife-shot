@@ -3,9 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    private float dir = 1;
-    public GameObject babySprite;
-    public CircleCollider2D circleCollider;
+
+    public GameObject knifePrefabs;
     private bool isStartGame = false;
     private Vector3 defaultPos = new Vector3(0, 1.6f, 0);
     void OnEnable()
@@ -28,14 +27,11 @@ public class Player : MonoBehaviour
     private void StartGame()
     {
         isStartGame = true;
-        babySprite.SetActive(true);
-        circleCollider.enabled = true;
+
     }
 
     public void DisablePlayerObject()
     {
-        babySprite.SetActive(false);
-        circleCollider.enabled = false;
         isStartGame = false;
     }
 
@@ -45,11 +41,8 @@ public class Player : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                dir *= -1;
-                SoundManager.instance.Play(SoundManager.instance.moveSound);
+                Instantiate(knifePrefabs, transform.position, Quaternion.identity);
             }
-            // float speed = GameManager.ins.GetPlayerSpeed();
-            // transform.RotateAround(Vector3.zero, Vector3.forward, speed * dir * Time.deltaTime);
         }
 
     }
