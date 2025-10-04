@@ -5,5 +5,8 @@ public class EventManager
 {
     public static Action StartGame;
     public static Action ResetGame;
-    public static Action<int> ShowMenu;
+    public static Action CleanObject;
+    public static Action<GameObject> ReturnObjectToPool;
+    public static Action ShowMenu;
+    public static Action<int> IncreasePoint;
 }

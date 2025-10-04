@@ -1,21 +1,29 @@
-using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Obstacle : MonoBehaviour
 {
-
     private float timer = 0;
     private float dir = 1;
-    private bool isStartGame = true;
-    void OnEnable()
+    private bool isStartGame = false;
+    public List<int> speedArray;
+    public int currentSpeed;
+    private Animator anim;
+    private float timeChangeBehavior;
+    public void OnEnable()
     {
+        anim = GetComponent<Animator>();
         EventManager.StartGame += StartGame;
         EventManager.ResetGame += ResetGame;
     }
 
+
     private void StartGame()
     {
         isStartGame = true;
+        timeChangeBehavior = UnityEngine.Random.Range(1, 2);
+        int index = Mathf.FloorToInt(UnityEngine.Random.Range(0, speedArray.Count - 1));
+        currentSpeed = speedArray[index];
     }
 
     void OnDisable()
@@ -29,9 +37,6 @@ public class Obstacle : MonoBehaviour
         timer = 0;
         dir = (UnityEngine.Random.Range(0, 2) == 0) ? 1f : -1f;
         isStartGame = false;
-
-        transform.position = Vector3.zero;
-        transform.rotation = Quaternion.identity;
     }
 
     void Update()
@@ -39,29 +44,23 @@ public class Obstacle : MonoBehaviour
         if (isStartGame)
         {
             timer += Time.deltaTime;
-        if (timer > 2.5f)
-        {
-            timer = 0f;
-            dir = (UnityEngine.Random.Range(0, 2) == 0) ? 1f : -1f;
+            if (timer > timeChangeBehavior)
+            {
+                timer = 0f;
+                dir = (UnityEngine.Random.Range(0, 2) == 0) ? 1f : -1f;
+                timeChangeBehavior = UnityEngine.Random.Range(2, 3);
+                int index = Mathf.FloorToInt(UnityEngine.Random.Range(0, speedArray.Count));
+                currentSpeed = speedArray[index];
+                Debug.Log(currentSpeed);
+            }
+            transform.Rotate(0, 0, dir * currentSpeed * Time.deltaTime);
         }
-        transform.Rotate(0, 0, 50f * dir * Time.deltaTime);
-        }
-        
+
     }
 
-    // private void OnTriggerEnter2D(Collider2D collision)
-    // {
-        // collision.gameObject.GetComponent<Player>().DisablePlayerObject();
+    public void ObstacleOnHit()
+    {
+        anim.SetTrigger("IsHit");
+    }
 
-        // SoundManager.instance.Play(SoundManager.instance.loseSound);
-
-        // if (explosion != null)
-        // {
-
-        //     explosion.transform.position = collision.gameObject.transform.position;
-        //     explosion.GetComponent<ParticleSystem>().Play();
-        // }
-
-    // }
-   
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class GameManager : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class GameManager : MonoBehaviour
         {
             PlayerPrefs.SetInt(highScore, value);
         }
-    } 
+    }
 
     public void PlayGame()
     {
@@ -42,10 +43,22 @@ public class GameManager : MonoBehaviour
     {
         currentStage = 0;
         EventManager.ResetGame?.Invoke();
+        StartCoroutine(ShowMenu());
+    }
+    private IEnumerator ShowMenu()
+    {
+        yield return new WaitForSeconds(2f);
+        EventManager.ShowMenu?.Invoke();
+        EventManager.CleanObject?.Invoke();
     }
 
-    public void ShowMenu(int score)
+    public void ReturnKnifeToPool(GameObject knife)
     {
-        EventManager.ShowMenu?.Invoke(score);
+        EventManager.ReturnObjectToPool?.Invoke(knife);
+    }
+
+    public void IncresePoint(int point)
+    {
+        EventManager.IncreasePoint?.Invoke(point);
     }
 }

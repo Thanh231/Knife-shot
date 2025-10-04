@@ -1,15 +1,15 @@
 using System;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class MenuMain : MonoBehaviour
+public class UIManager : MonoBehaviour
 {
     public GameObject tutorial;
     public GameObject menu;
     public TextMeshProUGUI currentScoreText;
     public TextMeshProUGUI highScoreText;
     public TextMeshProUGUI tutorialText;
+    public TextMeshProUGUI scoreText;
     private bool isIncreasePoint = false;
     private int increaseDuration = 0;
 
@@ -28,11 +28,20 @@ public class MenuMain : MonoBehaviour
         }
         EventManager.StartGame += StartGame;
         EventManager.ShowMenu += ShowMenu;
+        EventManager.IncreasePoint += IncresePoint;
     }
+
+    private void IncresePoint(int point)
+    {
+        currentScore += point;
+        scoreText.text = currentScore.ToString();
+    }
+
     void OnDisable()
     {
         EventManager.StartGame -= StartGame;
         EventManager.ShowMenu -= ShowMenu;
+        EventManager.IncreasePoint -= IncresePoint;
     }
 
 
@@ -57,9 +66,8 @@ public class MenuMain : MonoBehaviour
 
     }
 
-    private void ShowMenu(int score)
+    private void ShowMenu()
     {
-        currentScore = score;
         isIncreasePoint = true;
         highScore = GameManager.ins.HighScore;
         highScoreText.text = "HIGH SCORE \n" + highScore.ToString("0000");
@@ -71,7 +79,7 @@ public class MenuMain : MonoBehaviour
         if (isIncreasePoint)
         {
             increaseDuration++;
-            if (increaseDuration > currentScore)
+            if (increaseDuration == currentScore)
             {
                 isIncreasePoint = false;
 
